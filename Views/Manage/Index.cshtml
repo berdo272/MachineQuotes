@@ -1,0 +1,105 @@
+﻿@model MachineQuotes.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <table class="text-left">
+
+        <tr>
+
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword", null, null, new { @class = "btn-danger btn" })
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword", null, null, new { @class = "btn-success btn" })
+            }
+
+        </tr>
+        <tr>
+            <td>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("View Quotes", "index", "Quotes", null, new { @class = "btn-primary btn" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br />
+            </td>
+        </tr>
+
+        @if ((User.IsInRole("admin")))
+            {
+
+            <tr>
+                <td>
+                    @Html.ActionLink("Add An Employee", "Register", "Account", null, new { @class = "btn-warning btn" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
+                </td>
+            </tr>                       
+            <tr>
+                <td>
+                    @Html.ActionLink("Manage Machine Options", "index", "Options", null, new { @class = "btn-primary btn" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("Manage Machines", "index", "Machines", null, new { @class = "btn-primary btn" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    
+                </td>
+            </tr>
+           
+
+
+        }
+    </table>
+</div>

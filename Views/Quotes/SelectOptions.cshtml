@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MachineQuotes.Models.Option>
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Group)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsStandard)
+        </th>
+        <th></th>
+    </tr>
+    @{string group2 = "";
+        using (Html.BeginForm())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @{
+                            string group = item.Group;
+
+
+                            if (group.ToString() != group2.ToString())
+                            {
+                                @Html.DisplayFor(modelItem => item.Group)
+                            }
+
+                            group2 = group;
+                        }
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsStandard)
+                    </td>
+
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Id)
+                        @Html.EditorFor(modelItem => item.Selected)
+                    </td>
+                </tr>
+                            }
+                            <input type="submit" class="btn btn-success" value="Update" />
+
+                            }
+    }
+
+
+</table>
