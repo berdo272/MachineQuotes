@@ -38,6 +38,16 @@
                 <br />
             </td>
         </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("View Machines", "index", "Machines", null, new { @class = "btn-primary btn" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br />
+            </td>
+        </tr>
 
         @if ((User.IsInRole("admin")))
             {
@@ -54,29 +64,10 @@
             </tr>                       
             <tr>
                 <td>
-                    @Html.ActionLink("Manage Machine Options", "index", "Options", null, new { @class = "btn-primary btn" })
+                   
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ActionLink("Manage Machines", "index", "Machines", null, new { @class = "btn-primary btn" })
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>
-
-                </td>
-            </tr>
+       
             <tr>
                 <td>
                     <br />

@@ -23,12 +23,60 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.Raw(Model.Price.ToString("c"))
         </dd>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<table class="table-bordered">
+    <tr>
+        <th>
+            Group
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Standard
+        </th>
+    </tr>
+    @{string group2 = "";
+        for (var x = 0; x < Model.Options.Count; x++)
+        {
+            <tr>
+                <td>
+                    @{
+                        string group = Model.Options[x].Group;
+
+
+                        if (group.ToString() != group2.ToString())
+                        {
+                            @Html.DisplayFor(modelItem => Model.Options[x].Group)
+                        }
+
+                        group2 = group;
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Options[x].Description)
+                </td>
+                <td>
+                    @Html.Raw(Model.Options[x].Price.ToString("C"))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Options[x].IsStandard)
+                </td>
+            </tr>
+                        }
+    }
+    <p>
+        @if(User.IsInRole("admin")){
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn-warning btn" }) @Html.Raw(" |")
+        }              
+        @Html.ActionLink("Back to List", "Index",null, new { @class = "btn-info btn" })
+    </p>

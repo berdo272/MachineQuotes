@@ -1,36 +1,63 @@
 ﻿@model MachineQuotes.Models.Quote
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Details";@Html.Raw("             ")
+
+
+    if (Model.FilePath == null)
+    {
+        @Html.ActionLink("Generate PDF", "generatePDF", "Quotes", new { id = Model.Id }, new { @class = "btn-success btn", @target = "_blank" })
+    }
+    if(Model.FilePath != null)
+    {
+        @Html.ActionLink("View PDF", "generatePDF", "Quotes", new { id = Model.Id }, new { @class = "btn-info btn", @target = "_blank" })
+    }
+    @Html.Raw("   |   ")
+    if (Model.FilePath == null || Model.CustomerEmail == null)
+    {
+        @Html.ActionLink("Email PDF (@Customer Email)", "MailPDF", "Quotes", null, new { @class = "btn-warning btn", @disabled = "disabled" })
+    }
+    if (Model.FilePath != null && Model.CustomerEmail != null)
+    {
+        @Html.ActionLink("Email PDF (@Customer Email)", "MailPDF", "Quotes", new { id = Model.Id }, new { @class = "btn-success btn" })
+    }
+    @Html.Raw("   |   ")  @Html.ActionLink("Export to CSV (Excel)","exportCSV","Quotes", new { id = Model.Id }, new { @class = "btn-success btn" })
 }
 
-<h2>Details</h2>
+<h2>Details</h2> 
 
 <div>
-    <h4>Quote</h4>
+    <h4>Quote @Html.Raw("  ") @Html.ActionLink("Back to List", "Index", null, null, new { @class = "btn-info btn" })</h4>
     <hr />
+    @using (Html.BeginForm("Details","Quotes",FormMethod.Post)) {
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.SalesmanId)
+            @Html.HiddenFor(model => model.FilePath)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.SalesmanId)
+            @Html.HiddenFor(model => model.SalesmanId)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.CustomerId)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.CustomerId)
+            @Html.HiddenFor(model => model.CustomerId)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerEmail)
+        </dt>
+        <dd>
+            @Html.EditorFor(model => model.CustomerEmail)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Date)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Date)
+            @Html.Raw(Model.Date.ToShortDateString())
+            @Html.HiddenFor(model => model.Date)
         </dd>
 
         <dt>
@@ -38,20 +65,84 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Note)
+            @Html.TextAreaFor(model => model.Note, 5, 40, new { htmlAttributes = new { @class = "form-control" } })          
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Machines)
         </dt>
-        @foreach(var machine in Model.Machines)
+        @for(var i=0; i < Model.Machines.Count; i++)
         {<dd>
-            @Html.DisplayFor(Model => machine.MachineName) | @Html.Action("SelectOptions")
+            @Html.DisplayFor(Model => Model.Machines[i].MachineName) | <input type="submit" class="btn btn-success" value="Update" />
         </dd>
-        }
+        <table class="table-bordered">
+            <tr>
+                <th>
+                    Group
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Standard
+                </th>
+                <th>
+                    Selected
+                </th>
+            </tr>
+            @{string group2 = "";
+                for(var x = 0; x<Model.Machines[i].Options.Count; x++ )
+                {
+                    <tr>
+                        <td>
+                            @{
+                                string group = Model.Machines[i].Options[x].Group;
+
+
+                                if (group.ToString() != group2.ToString())
+                                {
+                                    @Html.DisplayFor(modelItem => Model.Machines[i].Options[x].Group)
+                                    @Html.HiddenFor(modelItem => Model.Machines[i].Options[x].Group)
+                                }
+
+                                group2 = group;
+                            }
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Machines[i].Options[x].Description)
+                            @Html.HiddenFor(modelItem => Model.Machines[i].Options[x].Description)
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Machines[i].Options[x].Price.ToString("c"))
+                            @Html.HiddenFor(modelItem => Model.Machines[i].Options[x].Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Machines[i].Options[x].IsStandard)
+                            @Html.HiddenFor(modelItem => Model.Machines[i].Options[x].IsStandard)
+                        </td>
+
+                        <td>
+
+                            @Html.HiddenFor(modelItem => Model.Machines[i].Options[x].Id)
+                            @Html.EditorFor(modelItem => Model.Machines[i].Options[x].Selected)
+                        </td>
+                    </tr>
+                                }
+            }
+
+
+        </table>
+                                }
+       
     </dl>
+
+    
+    }
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index",null,null, new { @class = "btn-info btn" })
 </p>

@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",null,null, new { @class = "btn-success btn" })
 </p>
 <table class="table">
     <tr>
@@ -35,15 +35,14 @@
             @Html.DisplayFor(modelItem => item.CustomerId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.Raw(item.Date.ToShortDateString())
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Note)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Details", "Details", new { id=item.Id }, new { @class = "btn-success btn" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn-warning btn" })
         </td>
     </tr>
 }

@@ -7,7 +7,10 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+@if (User.IsInRole("admin"))
+{
+    @Html.ActionLink("Create New", "Create", null, null, new { @class = "btn-success btn" })
+}
 </p>
 <table class="table">
     <tr>
@@ -20,20 +23,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MachineName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MachineName)
+            </td>
+            <td>
+                @Html.Raw(item.Price.ToString("c"))
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn-info btn" })
+
+                @if (User.IsInRole("admin"))
+                {
+                    @Html.Raw(" | ")
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id },new { @class = "btn-success btn" }) @Html.Raw(" | ")
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn-warning btn" })
+
+                }
+                
+
+            </td>
+        </tr>
+                }
 
 </table>

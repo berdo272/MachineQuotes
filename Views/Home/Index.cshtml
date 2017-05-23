@@ -1,21 +1,25 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
 <div class="jumbotron">
     <h1>HighTech Machine Quoting</h1>
     <p class="lead"></p>
     <p class="center"></p>
 </div>
-
 <div class="row">
     <div class="col-md-4">
         <h2>Create New Quote</h2>
         <p></p>
         <p>@Html.ActionLink("Add New", "create", "Quotes", null, new { @class = "btn-success btn" })</p>
     </div>
-    @if (User.IsInRole("admin"))
-    {
-        
-    }
+    <div class="col-md-4">
+        <h2>View Quotes</h2>
+        <p></p>
+        <p>@Html.ActionLink("View", "index", "Quotes", null, new { @class = "btn-info btn" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>View Machines</h2>
+        <p></p>
+        <p>@Html.ActionLink("View", "index", "Machines", null, new { @class = "btn-info btn" })</p>
+    </div>
 </div>
